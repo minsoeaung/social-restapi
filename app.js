@@ -23,6 +23,9 @@ mongoose.connect(process.env.MONGO_URL, () => {
     console.log("MongoDB connection successful")
 })
 
+// serve static file
+app.use('/images', express.static(path.join(__dirname, 'public/images')))
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
