@@ -123,4 +123,48 @@ router.put('/:id/unfollow', async (req, res) => {
     }
 })
 
+/*
+*   Get followings list of a user
+* */
+router.get('/followings/:userId', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId)
+        const followings = await Promise.all(
+            user.followings.map(id => (
+                User.findById(id)
+            ))
+        )
+        let followingList = []
+        followings.map(user => {
+            const {_id, username, email, profilePicture} = user
+            followingList.push({_id, username, email, profilePicture})
+        })
+        res.status(200).json(followingList)
+    } catch (e) {
+        res.status(500).json(e)
+    }
+})
+
+/*
+*   Get followers list of a user
+* */
+router.get('/followers/:userId', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId)
+        const followers = await Promise.all(
+            user.followers.map(id => (
+                User.findById(id)
+            ))
+        )
+        let followerList = []
+        followers.map(user => {
+            const {_id, username, email, profilePicture} = user
+            followerList.push({_id, username, email, profilePicture})
+        })
+        res.status(200).json(followerList)
+    } catch (e) {
+        res.status(500).json(e)
+    }
+})
+
 module.exports = router;
