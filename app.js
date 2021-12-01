@@ -10,6 +10,8 @@ const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth')
 const postRouter = require('./routes/posts')
 const uploadRouter = require('./routes/upload')
+const conversationRouter = require('./routes/conversation')
+const messageRouter = require('./routes/messages')
 
 const app = express();
 
@@ -49,6 +51,8 @@ app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/posts', postRouter)
 app.use('/api/upload', uploadRouter)
+app.use('/api/conversations', conversationRouter)
+app.use('/api/messages', messageRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
