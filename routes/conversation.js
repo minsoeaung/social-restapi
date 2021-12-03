@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
 })
 
 /*
-*   Get conversation of a user
+*   Get all conversations of a user
 * */
 router.get('/:userId', async (req, res) => {
     try {
@@ -27,6 +27,22 @@ router.get('/:userId', async (req, res) => {
             members: {$in: [req.params.userId]}
         })
         res.status(200).json(conv)
+    } catch (e) {
+        res.status(500).json(e)
+    }
+})
+
+/*
+*   Get conversation of two specific person
+* */
+router.get('/find/:firstUserId/:secondUserId', async (req, res) => {
+    try {
+        const conversation = await Conversation.findOne({
+            members: {
+                $all: [req.params.firstUserId, req.params.secondUserId]
+            }
+        })
+        res.status(200).json(conversation)
     } catch (e) {
         res.status(500).json(e)
     }
